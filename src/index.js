@@ -1,3 +1,5 @@
 // import styles or other compnents here
 
-import "./styles/styles.css"
+import main from "./js/main"
+
+main();
