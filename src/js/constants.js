@@ -3,7 +3,7 @@ export default {
     canvasH: 600,
     scale: 20,
     growth: 4,
-    gameSpeed: 40,
+    gameSpeed: 20,
     initSnakeX: 4,
     initSnakeY: 2,
     initSnakeLen: 3,
