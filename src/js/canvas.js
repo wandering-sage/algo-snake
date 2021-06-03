@@ -11,6 +11,7 @@ var hideGO;
 
 function start() {
     var tout;
+    var currLoop;
     if(c.gameOver){
         ctx.clearRect(0,0,canvas.width, canvas.height);
         snake.respawn();
@@ -18,6 +19,7 @@ function start() {
         c.gameOver = false;
     }
     function loop(){
+        currLoop = Date.now()
         ctx.clearRect(0,0,canvas.width, canvas.height);
         var state = snake.update();
         snake.draw(ctx);
@@ -58,4 +60,4 @@ var score = document.createElement("div");
 score.classList.add("score-board");
 score.innerText = "00000";
 
-export { canvas, start, score};
+export { canvas, start, score, ctx};

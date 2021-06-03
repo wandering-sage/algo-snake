@@ -35,6 +35,47 @@ h1 {
 	animation: blink 2.5s ease infinite;
 }
 
+fieldset {
+	display: flex;
+	width: 250px;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+	border-radius: 20px;
+	border: #D3868C solid 2px;
+}
+fieldset>legend{
+	color: #D3868C;
+	font-size: 1.2em;
+}
+
+.controls {
+	height: 150px;
+	position: absolute;
+	top: 21vh;
+	left: 2vw;
+}
+
+.auto-container{
+	position: absolute;
+	top: 50vh;
+	left: 2vw;
+}
+
+.button {
+	cursor: pointer;
+	width: 75%;
+	padding: 10px 0;
+	background: #eee;
+	border-radius: 20px;
+	border: none;
+	transition: 0.1s ease-out;
+}
+.button:hover {
+	transform: scale(1.07);
+	transition: 0.1s ease-in;
+}
+
 @keyframes blink {
 	0% {
 		opacity: 0.05;

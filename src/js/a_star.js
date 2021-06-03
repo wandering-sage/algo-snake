@@ -2,26 +2,11 @@ import { canvas, ctx } from "./canvas";
 import c from "./constants";
 import snake from "./snake";
 
-class Queue {
-	constructor() {
-		this.items = [];
-	}
-	enqueue(element) {
-		this.items.push(element);
-	}
-	dequeue() {
-		return this.items.shift();
-	}
-	isEmpty() {
-		return this.items.length == 0;
-	}
-}
-
 var timeOut;
 
-function goBfs() {
+function aStar() {
 	timeOut = 0;
-	var q = new Queue();
+	var storage = [];
 	var visited = [];
 	for (let i = 0; i < c.canvasW/c.scale; i++) {
 		visited[i] = [];
@@ -29,14 +14,26 @@ function goBfs() {
 			visited[i][j] = false;
 		}
 	}
-	q.enqueue({
+	storage.push({
 		x: c.headX,
 		y: c.headY,
 		parent: "head",
+		f:
+			Math.abs(c.headX / c.scale - c.AppleX / c.scale) +
+			Math.abs(c.headY / c.scale - c.AppleY / c.scale),
+		g: 0,
 	});
-	var found = false;
-	while (!q.isEmpty()) {
-		var curr = q.dequeue();
+	visited[c.headX / c.scale][c.headY / c.scale] = true;
+	var found = false; 
+	while (storage.length > 0) {
+		var idx = 0;
+		var curr = storage.reduce((acc, crr, i) => {
+			idx = acc.f < crr.f ? idx : i;
+			return acc.f < crr.f ? acc : crr;
+		});
+		storage.splice(idx,1);
+		setTimeout(fillPixels, timeOut, curr, "#D3868C");
+		timeOut += 10;
 		var neighbors = getNeighbors(curr);
 		neighbors.every((e) => {
 			if (e.x == c.AppleX && e.y == c.AppleY) {
@@ -46,10 +43,9 @@ function goBfs() {
 			}
 			if (!visited[e.x / c.scale][e.y / c.scale]) {
 				visited[e.x / c.scale][e.y / c.scale] = true;
+				addHurestic(e);
 				e.parent = curr;
-				q.enqueue(e);
-				setTimeout(fillPixels, timeOut, e, "#D3868C");
-				timeOut+=5 ;
+				storage.push(e);
 			}
 			return true;
 		});
@@ -60,8 +56,8 @@ function goBfs() {
 	}
 }
 
-function makePath(loc){
-	if(loc.parent == "head"){
+function makePath(loc) {
+	if (loc.parent == "head") {
 		setTimeout(fillPixels, timeOut, loc, "#2B8C34");
 		timeOut += 20;
 		return;
@@ -71,21 +67,28 @@ function makePath(loc){
 	timeOut += 20;
 }
 
-function fillPixels({x,y}, color){
+function fillPixels({ x, y }, color) {
 	ctx.fillStyle = color;
 	ctx.fillRect(x, y, c.scale, c.scale);
 	snake.draw(ctx);
 }
 
-function getNeighbors({ x, y }) {
+function addHurestic(el) {
+	el.h =
+		Math.abs(el.x / c.scale - c.AppleX / c.scale) +
+		Math.abs(el.y / c.scale - c.AppleY / c.scale);
+	el.f = el.g + el.h;
+}
+
+function getNeighbors({ x, y, g }) {
 	if (x < 0 || y < 0 || x >= c.canvasW || y >= c.canvasH) {
 		return [];
 	}
 	var ret = [];
-	var l = { x: x - c.scale, y: y };
-	var r = { x: x + c.scale, y: y };
-	var u = { x: x, y: y - c.scale };
-	var d = { x: x, y: y + c.scale };
+	var l = { x: x - c.scale, y: y, g: g + 1 };
+	var r = { x: x + c.scale, y: y, g: g + 1 };
+	var u = { x: x, y: y - c.scale, g: g + 1 };
+	var d = { x: x, y: y + c.scale, g: g + 1 };
 	if (u.y >= 0 && !snake.onSnake(u)) {
 		ret.push(u);
 	}
@@ -101,4 +104,4 @@ function getNeighbors({ x, y }) {
 	return ret;
 }
 
-export { goBfs };
+export { aStar, addHurestic, getNeighbors, fillPixels };

@@ -3,13 +3,13 @@ import { score } from "./canvas";
 
 var x = c.initSnakeX * c.scale;
 var y = c.initSnakeY * c.scale;
-var tail = c.initSnakeTail.slice(0);
+c.tail = c.initSnakeTail.slice(0);
 var len = c.initSnakeLen;
 var currentLenGrow = 0;
 
 function draw(ctx) {
 	ctx.fillStyle = "#ddd";
-	tail.forEach((pt) => {
+	c.tail.forEach((pt) => {
 		ctx.fillRect(pt.x, pt.y, c.scale, c.scale);
 	});
 	ctx.fillStyle = "#ac2c2c";
@@ -67,11 +67,11 @@ function update() {
 
 	// moving tail one steap ahead
 	for (var i = 0; i < len; i++) {
-		[temp, tail[i]] = [tail[i], temp];
+		[temp, c.tail[i]] = [c.tail[i], temp];
 	}
 
 	if(currentLenGrow>0){
-		tail[len] = temp;
+		c.tail[len] = temp;
 		len++;
 		currentLenGrow--;
 	}
@@ -79,7 +79,7 @@ function update() {
 	if (eatApple()) {
 		updateScore();
 		currentLenGrow += c.growth;
-		tail[len] = temp;
+		c.tail[len] = temp;
 		len++;
 		currentLenGrow--;
 		getNewLocation();
@@ -93,7 +93,7 @@ function update() {
 function respawn() {
 	x = c.initSnakeX * c.scale;
 	y = c.initSnakeY * c.scale;
-	tail = c.initSnakeTail.slice(0);
+	c.tail = c.initSnakeTail.slice(0);
 	len = c.initSnakeLen;
 	c.direction = "r";
 	c.xSpeed = 1;
@@ -120,7 +120,7 @@ function getNewLocation() {
 }
 
 function onSnake(pos) {
-	return tail.reduce((acc, crr) => {
+	return c.tail.reduce((acc, crr) => {
 		return acc || (crr.x == pos.x && crr.y == pos.y);
 	}, false);
 }
