@@ -1,15 +1,17 @@
 import c from "./constants";
 import {getNeighbors, addHurestic, fillPixels} from "./a_star";
-import snake from "./snake";
 
-function walkOnPath(curr){
+function walkOnPath(curr, fun){
+	if(!c.autoPlay){
+		return;
+	}
     var last = {x: c.headX, y: c.headY};
     var delay = 1000/c.gameSpeed;
     var dirX = (curr.x - last.x) / c.scale;
     var dirY = (curr.y - last.y) / c.scale;
     var dirKey = getDirKey(dirX, dirY);
-    pressThis(dirKey);
-    setTimeout(autoAstar, delay); 
+	pressThis(dirKey);
+    setTimeout(fun, delay); 
 }
 
 function getDirKey(x,y){
@@ -44,7 +46,7 @@ function survivalMode(){
 	}
 	getLongestPath(curr);
 	console.log(maxLen);
-	walkOnPath(getAstarPath(maxNext));
+	walkOnPath(getAstarPath(maxNext), autoAstar);
 
 	function getLongestPath(node){
 		var avaliabeSquares = (c.canvasH/c.scale)*(c.canvasW/c.scale)-c.tail.length;
@@ -120,7 +122,7 @@ function autoAstar() {
 			return true;
 		});
 		if (found) {
-			walkOnPath(getAstarPath(found));
+			walkOnPath(getAstarPath(found), autoAstar);
 			break;
 		}
 	}
@@ -130,4 +132,4 @@ function autoAstar() {
 }
 
 
-export {autoAstar};
+export {autoAstar, walkOnPath};

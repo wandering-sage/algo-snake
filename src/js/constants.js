@@ -3,8 +3,8 @@ export default {
     canvasH: 600,
     scale: 20,
     growth: 4,
-    gameSpeed: 20,
-    initSnakeX: 4,
+    gameSpeed: 15,
+    initSnakeX: 9,
     initSnakeY: 2,
     initSnakeLen: 3,
     headX: 0,
@@ -22,4 +22,5 @@ export default {
     direction: "r",
     gameOver: false,
     isRunning: false,
+    autoPlay: false
 }

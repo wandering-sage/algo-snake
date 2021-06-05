@@ -46,19 +46,35 @@ fieldset {
 }
 fieldset>legend{
 	color: #D3868C;
+	font-family: "Roboto";
 	font-size: 1.2em;
 }
 
-.controls {
-	height: 150px;
+.controls{
 	position: absolute;
 	top: 21vh;
 	left: 2vw;
 }
 
-.auto-container{
+.range-container{
+	color: #eee;
+	display: flex;
+	width: 100%;
+	justify-content: space-around;
+	margin: 5px 0;
+}
+
+.pathFinders {
+	height: 150px;
 	position: absolute;
-	top: 50vh;
+	top: 36vh;
+	left: 2vw;
+}
+
+.auto-container{
+	height: 150px;
+	position: absolute;
+	top: 63vh;
 	left: 2vw;
 }
 
@@ -66,6 +82,9 @@ fieldset>legend{
 	cursor: pointer;
 	width: 75%;
 	padding: 10px 0;
+	font-family: "Roboto";
+	font-weight: 500;
+	color: #1e1e1ee0;
 	background: #eee;
 	border-radius: 20px;
 	border: none;
@@ -74,6 +93,9 @@ fieldset>legend{
 .button:hover {
 	transform: scale(1.07);
 	transition: 0.1s ease-in;
+}
+.button.active{
+	background: #96e06c;
 }
 
 @keyframes blink {

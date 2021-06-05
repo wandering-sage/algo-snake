@@ -3,7 +3,9 @@ import { autoAstar } from "./autoPlay";
 import { aStar } from "./a_star";
 import { goBfs } from "./bfs";
 import { canvas, start, score } from "./canvas";
+import {openPopup} from "./instructions";
 import c from "./constants";
+import { autoHamilton } from "./hamiltonian";
 
 var endloop;
 var hide;
@@ -84,22 +86,69 @@ function makeField(cls, str){
 	return container;
 }
 
+function makeRangeInput(name, init, max, min, clickFun, parent){
+
+	var container = document.createElement("div");
+	container.classList.add("range-container");
+	parent.appendChild(container);
+
+	var label = document.createElement("span");
+	label.innerText = name;
+	container.appendChild(label);
+	
+	var slider = document.createElement("input");
+	slider.type = "range";
+	slider.value = init;
+	slider.max = max;
+	slider.min = min;
+	slider.addEventListener("click", e=>{
+		e.target.blur();
+	})
+	slider.addEventListener("input", (e)=>{
+		data.innerText = e.target.value;
+		clickFun(e);
+	});
+	container.appendChild(slider);
+
+	var data = document.createElement("span");
+	data.innerText = init;
+	container.appendChild(data);
+
+}
+
+function updateSpeed(e){
+	c.gameSpeed = e.target.value;
+}
+
 export default function main() {
 	document.body.appendChild(score);
 	document.body.appendChild(canvas);
+
+	openPopup();
 
 	hide = init();
 
 	window.addEventListener("keydown", handelKeyPress);
 
-	var controls = makeField("controls", "Path Finders");
+	var controls = makeField("controls", "Configs");
 	document.body.appendChild(controls);
-	var bfsButton = makeButton(controls, "Dijkstra's Algorithm", "button", goBfs);
-	var aStartButton = makeButton(controls, "A Star Algorithm", "button", aStar);
+	var snkSpeed = makeRangeInput("Speed", 15, 50, 5, updateSpeed, controls);
+
+	var pathFinders = makeField("pathFinders", "Path Finders");
+	document.body.appendChild(pathFinders);
+	var bfsButton = makeButton(pathFinders, "Dijkstra's Algorithm", "button", goBfs);
+	var aStartButton = makeButton(pathFinders, "A Star Algorithm", "button", aStar);
 
 	var autoPlay = makeField("auto-container", "Auto Play");
 	document.body.appendChild(autoPlay);
-	var autoAstarbtn = makeButton(autoPlay, "Use A-Star", "button", autoAstar);
-
-
+	var autoAstarbtn = makeButton(autoPlay, "Use A-Star", "button", ()=>{c.autoPlay = !c.autoPlay;});
+	autoAstarbtn.addEventListener("click",()=>{
+		autoAstar();
+		autoAstarbtn.classList.toggle("active");
+	})
+	var autoHamiltonbtn = makeButton(autoPlay, "Use Hamilton", "button", ()=>{c.autoPlay = !c.autoPlay;});
+	autoHamiltonbtn.addEventListener("click",()=>{
+		autoHamilton();
+		autoHamiltonbtn.classList.toggle("active");
+	})
 }

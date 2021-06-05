@@ -27,6 +27,10 @@ function start() {
         if(state=="Over"){
             endLoop();
             hideGO = gameOver();
+            var btns = document.querySelectorAll(".auto-container button");
+            btns.forEach(b=>{
+                b.classList.remove("active");
+            })
         }
     }
     function endLoop(){
