@@ -9,48 +9,72 @@ var currentLenGrow = 0;
 
 function draw(ctx) {
 	ctx.fillStyle = "#ddd";
-	c.tail.forEach((pt) => {
-		ctx.fillRect(pt.x, pt.y, c.scale, c.scale);
+	c.tail.forEach((pt, i) => {
+		if(i<c.tail.length){
+			connectTail(c.tail[i]);
+		}
+		ctx.fillStyle = "#ddd";
+		ctx.fillRect(pt.x+1, pt.y+1, c.scale-2, c.scale-2);
 	});
 	ctx.fillStyle = "#ac2c2c";
-	ctx.fillRect(c.AppleX, c.AppleY, c.scale, c.scale);
+	ctx.fillRect(c.AppleX+1, c.AppleY+1, c.scale-2, c.scale-2);
 	ctx.beginPath();
 	switch (c.direction) {
 		case "l":
-			ctx.moveTo(x + c.scale, y);
-			ctx.lineTo(x, y);
+			ctx.moveTo(x + c.scale-1, y+1);
+			ctx.lineTo(x+1, y+1);
 			ctx.lineTo(x + c.scale / 2, y + c.scale / 2);
-			ctx.lineTo(x, y + c.scale);
-			ctx.lineTo(x + c.scale, y + c.scale);
+			ctx.lineTo(x+1, y + c.scale-1);
+			ctx.lineTo(x + c.scale-1, y + c.scale-1);
 			break;
 		case "r":
-			ctx.moveTo(x, y);
-			ctx.lineTo(x + c.scale, y);
+			ctx.moveTo(x+1, y+1);
+			ctx.lineTo(x + c.scale-1, y+1);
 			ctx.lineTo(x + c.scale / 2, y + c.scale / 2);
-			ctx.lineTo(x + c.scale, y + c.scale);
-			ctx.lineTo(x, y + c.scale);
+			ctx.lineTo(x + c.scale-1, y + c.scale-1);
+			ctx.lineTo(x+1, y + c.scale-1);
 			break;
 		case "u":
-			ctx.moveTo(x, y + c.scale);
-			ctx.lineTo(x, y);
+			ctx.moveTo(x+1, y + c.scale-1);
+			ctx.lineTo(x+1, y+1);
 			ctx.lineTo(x + c.scale / 2, y + c.scale / 2);
-			ctx.lineTo(x + c.scale, y);
-			ctx.lineTo(x + c.scale, y + c.scale);
+			ctx.lineTo(x + c.scale-1, y+1);
+			ctx.lineTo(x + c.scale-1, y + c.scale-1);
 			break;
 		case "d":
-			ctx.moveTo(x, y);
-			ctx.lineTo(x, y + c.scale);
+			ctx.moveTo(x+1, y+1);
+			ctx.lineTo(x+1, y + c.scale-1);
 			ctx.lineTo(x + c.scale / 2, y + c.scale / 2);
-			ctx.lineTo(x + c.scale, y + c.scale);
-			ctx.lineTo(x + c.scale, y);
+			ctx.lineTo(x + c.scale-1, y + c.scale-1);
+			ctx.lineTo(x + c.scale-1, y+1);
 			break;
 	}
 	ctx.closePath();
 	ctx.fillStyle = "#ddd";
 	ctx.fill();
+
+	function connectTail(last){
+		// ctx.fillStyle = "red";
+		switch(last.direction){
+			case "l":
+				ctx.fillRect(last.x+1,last.y+1,-2,c.scale-2);
+				break;
+			case "r":
+				ctx.fillRect(last.x+c.scale-1,last.y+1,2,c.scale-2);
+				break;
+			case "u":
+				ctx.fillRect(last.x+1,last.y+1,c.scale-2, -2);
+				break;
+			case "d":
+				ctx.fillRect(last.x+1,last.y+c.scale-1,c.scale-2, 2);
+				break;
+		}
+	}
 }
 
 function update() {
+	var direction = c.direction;
+	// TODO: add oriantation detection on tail, and make gaps between snake movements
 	// check Collision
 	if (onSnake({ x, y })) {
 		c.gameOver = true;
@@ -63,7 +87,7 @@ function update() {
 		return "Over";
 	}
 
-	var temp = { x, y };
+	var temp = { x, y, direction };
 
 	// moving tail one steap ahead
 	for (var i = 0; i < len; i++) {
