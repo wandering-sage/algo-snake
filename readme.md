@@ -1,9 +1,9 @@
 <div align="center">
 
-<h1>Project Title</h1>
+<h1>Algo Snake</h1>
 
 <p>
-  <strong>A website Desc.</strong>
+  <strong>A website where you can play snake game and Visualize Path Finding Algorithms</strong>
   <br /><br />
   Build from scratch with no dependency.
 </p>
@@ -19,7 +19,7 @@
 
 ## Project in Action
 
-<img src="image-URL">
+<img src="src/images/Screenshot.png">
 
 ## Getting Started
 - Clone this repo and unzip the folder on desktop or wherever you want.
@@ -27,7 +27,8 @@
 - Change directory to where you unzipped this folder.
 ```bash
 cd Desktop
-cd Change This
+git clone https://github.com/wandering-sage/algo-snake.git
+cd algo-snake
 ```
 - Type npm start to start a dev server.
 ```bash
@@ -41,6 +42,9 @@ npm run build
 ```
 
 ## Features
-- Something here
-- 'Something here' strikes again
+- Created a web-app where you can play snake game and visualize path finding algorithms.
+- Used JavaScript, Webpack, ES6 modules, and HTML canvas.
+- Implemented Dijkstra’s Algorithm, A-star as visualizations.
+- Also implemented the functionality to Auto-play using Hamilton-cycle and A-Star i.e. computer will play the game.
+
 
