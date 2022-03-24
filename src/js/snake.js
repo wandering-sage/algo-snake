@@ -74,7 +74,6 @@ function draw(ctx) {
 
 function update() {
 	var direction = c.direction;
-	// TODO: add oriantation detection on tail, and make gaps between snake movements
 	// check Collision
 	if (onSnake({ x, y })) {
 		c.gameOver = true;

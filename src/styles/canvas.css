@@ -2,9 +2,9 @@
 
 canvas{
     border: 2px solid rgb(170, 170, 170);
-    margin: calc((100vh - 600px)/2) auto;
     position: absolute;
-    right: 50px;
+    right: 3vw;
+    top: 8vh;
     background-color: #2e2e2e;
 }
 

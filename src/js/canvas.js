@@ -3,6 +3,9 @@ import c from "./constants"
 import snake from "./snake";
 
 var canvas = document.createElement("canvas");
+
+updateHeightWeight();
+
 canvas.height = c.canvasH;
 canvas.width = c.canvasW;
 
@@ -58,6 +61,18 @@ function gameOver(){
     }
 
     return hide;
+}
+
+function updateHeightWeight(){
+    c.canvasH = window.innerHeight * 0.84;
+    c.canvasW = window.innerWidth * 0.74;
+
+    // Snaping H and W Grid scale
+    var hDiff = c.canvasH % c.scale;
+    var wDiff = c.canvasW % c.scale;
+    
+    c.canvasH -= hDiff - (hDiff > 0.7 * c.scale ? c.scale : 0); 
+    c.canvasW -= wDiff - (wDiff > 0.7 * c.scale ? c.scale : 0);
 }
 
 var score = document.createElement("div");
