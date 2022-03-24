@@ -5,7 +5,8 @@
 <p>
   <strong>A website where you can play snake game and Visualize Path Finding Algorithms</strong>
   <br /><br />
-  Build from scratch with no dependency.
+  Live Project Link: 
+  <a href="https://wandering-sage.github.io/algo-snake/">https://wandering-sage.github.io/algo-snake/</a>
 </p>
 
 
@@ -21,30 +22,52 @@
 
 <img src="src/images/Screenshot.png">
 
-## Getting Started
-- Clone this repo and unzip the folder on desktop or wherever you want.
-- Launch your **Terminal** or **Command prompt**
-- Change directory to where you unzipped this folder.
+
+### Getting Started:
+
+- Clone, unzip and navigate to the project directory in your terinal.
+
 ```bash
-cd Desktop
 git clone https://github.com/wandering-sage/algo-snake.git
 cd algo-snake
 ```
+
+- To install dev dependencies, type the following command in your terminal.
+
+```bash
+npm install
+```
+
 - Type npm start to start a dev server.
+
 ```bash
 npm start
 ```
-- The dev server will be running at [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 
+- The dev server will be running at [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 - Type npm run build to make bundle for production.
+
 ```bash
 npm run build
 ```
 
-## Features
-- Created a web-app where you can play snake game and visualize path finding algorithms.
-- Used JavaScript, Webpack, ES6 modules, and HTML canvas.
+### How to use:
+
+- Launch the [website](https://wandering-sage.github.io/algo-snake/).
+- You can use the arrow or wasd keys to change the direction of the snake.
+- You can pause the game at any state by pressing the Spacebar key.
+- To visualize a pathfinding algo:
+  - pause the game
+  - then click the algorithm you want to visualize.
+- To use Auto-play just click the button in a running game.
+
+
+### Description:
+
+- This is a website where you can play snake game and Visualize Path Finding Algorithms.
+- Used JavaScript, Webpack, ES6 modules, and HTML canvas to implement this project.
 - Implemented Dijkstra’s Algorithm, A-star as visualizations.
-- Also implemented the functionality to Auto-play using Hamilton-cycle and A-Star i.e. computer will play the game.
+- Also implemented the functionality to Auto-play using Hamilton-cycle and A-star.
+- User can alter the game's speed using the speed slider.
 
 
